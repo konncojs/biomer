@@ -19,24 +19,38 @@
   },
   "formatter": {
     "enabled": true,
-    "indentStyle": "tab"
+    "indentStyle": "space",
+    "indentWidth": 2
   },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noAssignInExpressions": "off"
+        "noAssignInExpressions": "off",
+        "noVar": "error"
       },
       "correctness": {
         "noUnusedImports": {
-          "level": "warn",
+          "level": "error",
           "fix": "safe",
           "options": {}
         }
       },
       "complexity": {
         "noImportantStyles": "off"
+      },
+      "performance": {
+        "useTopLevelRegex": "error"
+      },
+      "style": {
+        "useFragmentSyntax": "error",
+        "noParameterAssign": "error",
+        "noYodaExpression": "error",
+        "useAtIndex": "warn",
+        "useTemplate": "error",
+        "noNonNullAssertion": "error",
+        "useReactFunctionComponents": "error"
       }
     }
   },
