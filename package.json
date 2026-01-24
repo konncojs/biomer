@@ -1,6 +1,6 @@
 {
   "name": "@konncojs/biomer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Standard Frontend rules for Konnco Studio using Biomejs.",
   "keywords": [],
   "publishConfig": {
