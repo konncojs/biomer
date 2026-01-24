@@ -67,9 +67,6 @@ jobs:
       - name: 🗃️ Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: 📦 Building library
-        run: pnpm build
-
       - name: 🚀 Publishing to GitHub Packages
         if: ${{ github.event.inputs.publish-only == 'true' }}
         run: pnpm publish --access public
