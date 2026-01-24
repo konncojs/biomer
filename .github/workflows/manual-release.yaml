@@ -1,0 +1,89 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish-only:
+        description: "Publish only without creating a release"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "true"
+          - "false"
+      increment:
+        description: "Version increment type"
+        required: true
+        default: "patch"
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+          - prepatch
+          - preminor
+          - premajor
+          - prerelease
+      dry-run:
+        description: "Run release-it in dry-run mode"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "true"
+          - "false"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🏗️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: 🧑‍💻 Set Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: 💼 Install pnpm globally
+        run: npm install -g pnpm@10.17.1
+
+      - name: ⚙️ Configure .npmrc for GitHub Packages
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > ~/.npmrc
+          echo "@konncojs:registry=https://npm.pkg.github.com" >> ~/.npmrc
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🗃️ Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 📦 Building library
+        run: pnpm build
+
+      - name: 🚀 Publishing to GitHub Packages
+        if: ${{ github.event.inputs.publish-only == 'true' }}
+        run: pnpm publish --access public
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🚀 Run release-it with manual increment
+        if: ${{ github.event.inputs.publish-only == 'false' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          CMD="pnpm release ${{ github.event.inputs.increment }} --ci"
+          if [ "${{ github.event.inputs['dry-run'] }}" = "true" ]; then
+            CMD="$CMD --dry-run"
+          fi
+          echo "Running command: $CMD"
+          $CMD

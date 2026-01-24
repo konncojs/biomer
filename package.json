@@ -1,0 +1,16 @@
+{
+  "name": "@konncojs/biomer",
+  "version": "0.0.0",
+  "description": "Standard Frontend rules for Konnco Studio using Biomejs.",
+  "keywords": [],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "public"
+  },
+  "author": "Konnco Studio <support@konnco.com> (konnco)",
+  "license": "ISC",
+  "packageManager": "pnpm@10.17.1",
+  "exports": {
+    "./standard": "./standard.json"
+  }
+}
