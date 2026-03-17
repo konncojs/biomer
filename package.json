@@ -1,11 +1,25 @@
 {
-  "name": "@konncojs/biomer",
+  "name": "@konnco/biomer",
   "version": "0.0.2",
   "description": "Standard Frontend rules for Konnco Studio using Biomejs.",
-  "keywords": [],
+  "keywords": [
+    "biome",
+    "konnco",
+    "frontend",
+    "standard",
+    "lint",
+    "format",
+    "rules"
+  ],
+  "homepage": "https://github.com/konncojs/biomer",
+  "repository": {
+    "url": "https://github.com/konncojs/biomer",
+    "type": "git"
+  },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "public"
+    "registry": "https://registry.npmjs.org",
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "release": "release-it"
@@ -23,6 +37,9 @@
     "release-it": "^19.2.4"
   },
   "release-it": {
+    "npm": {
+      "skipChecks": true
+    },
     "github": {
       "release": true,
       "releaseName": "v${version}"

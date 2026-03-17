@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      packages: write
+      id-token: write
 
     steps:
       - name: 📥 Checkout code
@@ -57,26 +57,15 @@ jobs:
       - name: 💼 Install pnpm globally
         run: npm install -g pnpm@10.17.1
 
-      - name: ⚙️ Configure .npmrc for GitHub Packages
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > ~/.npmrc
-          echo "@konncojs:registry=https://npm.pkg.github.com" >> ~/.npmrc
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: 🗃️ Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: 🚀 Publishing to GitHub Packages
         if: ${{ github.event.inputs.publish-only == 'true' }}
-        run: pnpm publish --access public
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm publish --provenance --access public
 
       - name: 🚀 Run release-it with manual increment
         if: ${{ github.event.inputs.publish-only == 'false' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           CMD="pnpm release ${{ github.event.inputs.increment }} --ci"
           if [ "${{ github.event.inputs['dry-run'] }}" = "true" ]; then
