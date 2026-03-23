@@ -28,7 +28,13 @@
       "recommended": true,
       "suspicious": {
         "noAssignInExpressions": "off",
-        "noVar": "error"
+        "noVar": "error",
+        "noUnknownAtRules": {
+          "options": {
+            "ignore": ["tailwind"]
+          },
+          "level": "warn"
+        }
       },
       "correctness": {
         "noUnusedImports": {
