@@ -13,7 +13,7 @@
   ],
   "homepage": "https://github.com/konncojs/biomer",
   "repository": {
-    "url": "https://github.com/konncojs/biomer",
+    "url": "git+https://github.com/konncojs/biomer.git",
     "type": "git"
   },
   "publishConfig": {
