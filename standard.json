@@ -31,7 +31,7 @@
         "noVar": "error",
         "noUnknownAtRules": {
           "options": {
-            "ignore": ["tailwind"]
+            "ignore": ["tailwind", "theme"]
           },
           "level": "warn"
         }
@@ -64,6 +64,11 @@
   "javascript": {
     "formatter": {
       "quoteStyle": "double"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
     }
   },
   "assist": {
